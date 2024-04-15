@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -19,6 +16,10 @@ public class JobData {
     private static boolean isDataLoaded = false;
 
     private static ArrayList<HashMap<String, String>> allJobs;
+
+    public static ArrayList<HashMap<String, String>> getAllJobs() {
+        return allJobs;
+    }
 
     /**
      * Fetch list of all values from loaded data,
@@ -34,7 +35,7 @@ public class JobData {
 
         ArrayList<String> values = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap<String, String> row : getAllJobs()) {
             String aValue = row.get(field);
 
             if (!values.contains(aValue)) {
@@ -50,7 +51,7 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        return allJobs;
+        return getAllJobs();
     }
 
     /**
@@ -71,11 +72,11 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
+        for (HashMap<String, String> row : getAllJobs()) {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -95,7 +96,19 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> job: getAllJobs()) {
+            for (String values : job.values()) {
+                if (values.toLowerCase().contains(value.toLowerCase())) {
+                    if (!jobs.contains(job)) {
+                        jobs.add(job);
+                    }
+                }
+            }
+        }
+
+        return jobs;
     }
 
     /**
