@@ -17,7 +17,7 @@ public class JobData {
 
     private static ArrayList<HashMap<String, String>> allJobs;
 
-    public static ArrayList<HashMap<String, String>> getAllJobs() {
+    public static ArrayList<HashMap<String, String>> getAllJobs() { //Bonus
         return allJobs;
     }
 
@@ -101,7 +101,7 @@ public class JobData {
         for (HashMap<String, String> job: getAllJobs()) {
             for (String values : job.values()) {
                 if (values.toLowerCase().contains(value.toLowerCase())) {
-                    if (!jobs.contains(job)) {
+                    if (!jobs.contains(job)) { //avoid duplicate
                         jobs.add(job);
                     }
                 }
